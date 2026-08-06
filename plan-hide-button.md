@@ -52,5 +52,5 @@ Der ursprüngliche Plan (`sp_dc`-Token, OAuth-App) ist damit hinfällig. Kein To
 
 - [ ] Handy-Wirkung gegenprüfen: ausgeblendeten Song suchen, taucht er in der daylist am Handy noch auf?
 - [ ] Un-Hide als zweite Taste — `removeContextTrackBan` existiert, ungetestet
-- [ ] `capture.py` löschen oder behalten? Nützt nur beim nächsten Protokoll-Bruch
-- [ ] Aufräumen: `capture.log` enthält Track- und Playlist-IDs, nichts Geheimes, aber unnötig
+- [x] `capture.py` behalten — Diagnosewerkzeug für den Tag, an dem Spotify den Mechanismus umbaut
+- [x] `capture.log` gelöscht, steht in `.gitignore`
