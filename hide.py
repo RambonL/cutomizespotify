@@ -23,7 +23,9 @@ from cdp import CDP_HTTP, evaluate
 # gesucht: die Registry über den React-Baum, die Interface-IDs über den Bundle-Code.
 BOOTSTRAP = """
   let req;
-  webpackChunkclient_web.push([[Symbol("hide")], {}, (r) => { req = r; }]);
+  const chunks = globalThis.webpackChunkclient_web || globalThis.rspackChunkclient_web;
+  if (!chunks) throw new Error("Webpack/Rspack-Chunk-Registry nicht gefunden");
+  chunks.push([[Symbol("hide")], {}, (r) => { req = r; }]);
 
   const iid = (name) => {
     const needle = '.u)("' + name + '")';
@@ -72,7 +74,6 @@ HIDE_JS = f"""(async () => {{
   if (!context) return {{status: "kein_kontext", title}};
   if (!feedback.getCapabilities().canBan) return {{status: "kein_ban", title}};
   await feedback.addContextTrackBan(context, track, 1);
-  await player.skipToNext();
   return {{status: "ok", track, context, title}};
 }})()"""
 
