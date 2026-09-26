@@ -43,6 +43,6 @@ Der Web-Player kann das nicht — dort ist dieselbe API ein Stub mit `canBan: fa
 ## Bekannte Fallstricke
 
 - **Hide gibt es nicht überall.** Nur in algorithmischen/redaktionellen Kontexten (daylist, Discover Weekly, Radio). Sonst meldet `hide.py` Exit 2 statt zu bannen.
-- **Modul-IDs wechseln mit jedem Spotify-Update.** `hide.py` sucht Registry und Interface-IDs deshalb zur Laufzeit. Bricht es trotzdem, sitzt der Fehler in dieser Suchheuristik — Details in [[cutomizespotify/docs/endpoint|endpoint]].
+- **Bundler und Modul-IDs wechseln mit Spotify-Updates.** `hide.py` unterstützt die Chunk-Registries von Webpack und Rspack und sucht Registry sowie Interface-IDs zur Laufzeit. Bricht es trotzdem, sitzt der Fehler in dieser Suchheuristik — Details in [[cutomizespotify/docs/endpoint|endpoint]].
 - **Spotify muss laufen.** Ohne Prozess kein Debug-Port und keine API. `hide.py` prüft den Port vorab und meldet per Notification statt in einen Traceback zu laufen — am Stream Deck sieht man sonst gar nichts.
 - **streamdeck-ui startet keine Shell.** Command ohne Fish, ohne `~/.profile`, ohne Environment. Absolute Pfade, inklusive vollem Pfad zum venv-Python.

@@ -42,7 +42,7 @@ Der generische Collection-Writer im Bundle wäre `POST <spclient>/collection/v2/
 
 Statt das Protokoll nachzubilden, ruft [[cutomizespotify/CLAUDE|hide.py]] die App-eigene API im Renderer auf — per CDP `Runtime.evaluate`. Kette:
 
-1. `webpackChunkclient_web.push(…)` liefert die Webpack-`require`-Funktion.
+1. `webpackChunkclient_web.push(…)` beziehungsweise `rspackChunkclient_web.push(…)` liefert die Webpack/Rspack-`require`-Funktion.
 2. Der React-Fiber-Baum wird per Breitensuche nach dem `RegistryProvider` durchsucht — erkennbar an `memoizedProps.value.resolve`. Nach ~24 Knoten gefunden.
 3. Interface-IDs kommen aus dem Bundle-Code über das Muster `.u)("<Name>")`.
 4. `registry.resolve(iid("PlayerAPI"))` und `registry.resolve(iid("FeedbackAPI"))`.
@@ -51,16 +51,20 @@ Relevante Signaturen (Desktop-Implementierung, Klasse `cH`):
 
 ```js
 feedback.getCapabilities()                              // {canBan: true}
-feedback.addContextTrackBan(contextUri, itemUri, 1)     // 1 = PROVIDER_CONTEXT
+feedback.addContextTrackBan(contextUri, itemUri, 1)     // PROVIDER_CONTEXT; springt selbst weiter
 feedback.removeContextTrackBan(contextUri, itemUri)     // Un-Hide
 player.getState()                                       // .item.uri, .context.uri, .item.name
-player.skipToNext()
 ```
+
+Seit Spotify 1.2.96 wechselt `addContextTrackBan` selbst zum nächsten Song. Ein anschließendes `player.skipToNext()` überspringt deshalb einen weiteren Song und wird nicht mehr aufgerufen.
 
 Im Web-Player ist dieselbe Klasse ein Stub (`Method not implemented`, `canBan: false`) — deshalb fehlt dort der Button, und deshalb muss es die Desktop-App sein.
 
 > [!warning] Modul-IDs sind flüchtig
 > `74933`, `83888`, `56358` und Co. stammen aus genau diesem Build. `hide.py` hartkodiert sie deshalb nicht, sondern sucht Registry und Interface-IDs zur Laufzeit. Bricht es nach einem Spotify-Update trotzdem, ist die Suchheuristik (`.u)("…")` bzw. `memoizedProps.value.resolve`) die Stelle zum Nachziehen.
+
+> [!info] Änderung in Spotify 1.2.96
+> Die globale Chunk-Registry heißt seit diesem Build `rspackChunkclient_web` statt `webpackChunkclient_web`. `hide.py` erkennt beide Namen.
 
 ## Un-Hide
 

@@ -23,16 +23,16 @@ Kontext und Fallstricke: [[cutomizespotify/CLAUDE|cutomizespotify]] · Protokoll
 
 Der ursprüngliche Plan (`sp_dc`-Token, OAuth-App) ist damit hinfällig. Kein Token nötig, die App macht den Call selbst.
 
-- [x] Webpack-`require` über `webpackChunkclient_web.push` geholt
+- [x] Webpack/Rspack-`require` über die jeweilige Chunk-Registry geholt
 - [x] Service-Registry im React-Fiber-Baum gefunden
 - [x] `FeedbackAPI` aufgelöst, `canBan: true` bestätigt
-- [x] `PlayerAPI` aufgelöst für Track, Kontext und Skip
+- [x] `PlayerAPI` aufgelöst für Track und Kontext
 - [x] Modul-IDs werden zur Laufzeit gesucht statt hartkodiert
 
 ## Phase 3 — `hide.py` ✅
 
 - [x] `cdp.py` als JS-Brücke (`-f datei.js` umgeht Shell-Quoting)
-- [x] `hide.py`: Track lesen → `addContextTrackBan(context, track, 1)` → `skipToNext()`
+- [x] `hide.py`: Track lesen → `addContextTrackBan(context, track, 1)`; Spotify springt dabei selbst weiter
 - [x] Exit-Codes 0 / 1 / 2, Rückmeldung per `notify-send`
 - [x] `--check` als Selbsttest, liest nur und verändert nichts
 - [x] Scharf getestet: Song ausgeblendet, Playback sprang weiter
