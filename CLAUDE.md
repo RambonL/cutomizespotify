@@ -27,6 +27,7 @@ Der Web-Player kann das nicht — dort ist dieselbe API ein Stub mit `canBan: fa
 ## Dateien
 
 - `hide.py` — das Tool. `--check` liest nur. Exit 0 = ausgeblendet, 1 = Fehler, 2 = nichts läuft bzw. Kontext kann kein Hide.
+- `like.py` — Song liken. **Kein CDP**, sondern die offizielle Web API (`PUT /v1/me/tracks`): für Like gibt es einen Endpunkt, und das Webpack-Bundle ist die fragilere Wette. Token aus dem `spotify_player`-Cache (`~/.cache/spotify-player/user_client_token.json`, Scope `user-library-modify` ist drin), Refresh per `refresh_token` + client_id aus `app.toml`. Track-ID von `playerctl` über MPRIS. `--check` liest nur, `--selftest` prüft die Parser ohne Netz. Reine Stdlib, die `.venv` braucht es nicht.
 - `cdp.py` — JS im Renderer ausführen. `-f datei.js` umgeht Shell-Quoting, was bei größeren Snippets nötig ist.
 - `capture.py` — Netzwerk-Mitschnitt per CDP. Nur noch Diagnosewerkzeug, falls Spotify den Mechanismus umbaut.
 - `.venv/` — `websockets`. Sonst nichts, alles andere ist Stdlib.
