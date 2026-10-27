@@ -2,3 +2,8 @@
 .env
 capture.log
 __pycache__/
+
+# local notes
+CLAUDE.md
+AGENTS.md
+plan-hide-button.md

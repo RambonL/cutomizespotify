@@ -7,7 +7,7 @@ tags:
 
 # endpoint
 
-Wie der Hide-Button intern funktioniert und warum der Zugriff über CDP läuft. Umsetzung: [[cutomizespotify/plan-hide-button|plan-hide-button]]
+Wie der Hide-Button intern funktioniert und warum der Zugriff über CDP läuft. Überblick: [README](../README.md)
 
 > [!info] Aufnahmebedingungen
 > Spotify 1.2.92.147 (Arch-Paket, CEF/Chromium 146), gestartet mit `--remote-debugging-port=9222`, mitgeschnitten per CDP durch `capture.py`. Header wurden bewusst nie protokolliert.
@@ -40,7 +40,7 @@ Der generische Collection-Writer im Bundle wäre `POST <spclient>/collection/v2/
 
 ## Der Weg, der funktioniert
 
-Statt das Protokoll nachzubilden, ruft [[cutomizespotify/CLAUDE|hide.py]] die App-eigene API im Renderer auf — per CDP `Runtime.evaluate`. Kette:
+Statt das Protokoll nachzubilden, ruft `hide.py` die App-eigene API im Renderer auf — per CDP `Runtime.evaluate`. Kette:
 
 1. `webpackChunkclient_web.push(…)` beziehungsweise `rspackChunkclient_web.push(…)` liefert die Webpack/Rspack-`require`-Funktion.
 2. Der React-Fiber-Baum wird per Breitensuche nach dem `RegistryProvider` durchsucht — erkennbar an `memoizedProps.value.resolve`. Nach ~24 Knoten gefunden.
